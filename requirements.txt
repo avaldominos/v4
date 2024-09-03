@@ -1,0 +1,8 @@
+# Flask es un microframework web en Python que permite crear aplicaciones web de forma sencilla.
+flask
+
+# mysql-connector-python es un conector oficial de MySQL para Python.
+mysql-connector-python
+
+# python-dotenv permite a las aplicaciones Python cargar variables de entorno desde un archivo .env.
+python-dotenv

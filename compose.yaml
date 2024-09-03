@@ -1,0 +1,41 @@
+services:
+  # Definición del servicio para la aplicación "app"
+  app:
+    # Construye la imagen Docker usando el Dockerfile en el directorio actual
+    build: .
+    # Nombre del contenedor para facilitar la identificación
+    container_name: flask_app
+    # Mapea el puerto 5000 del host al puerto 5000 del contenedor
+    ports:
+      - "5000:5000"
+    # Archivo de entorno para configurar variables de entorno dentro del contenedor
+    env_file:
+      - .env
+    # Especifica que este servicio depende de que el servicio "mysql" esté listo antes de iniciar
+    depends_on:
+      - mysql
+
+  # Definición del servicio para la base de datos MySQL
+  mysql:
+    # Utiliza la última imagen oficial de MySQL disponible en Docker Hub
+    image: mysql:latest
+    # Nombre del contenedor para la base de datos MySQL
+    container_name: flask_mysql
+    # Archivo de entorno para configurar variables de entorno para MySQL, como la contraseña root
+    env_file:
+      - .env
+    # Volúmenes para persistencia de datos y scripts de inicialización
+    volumes:
+      # Directorio local con archivos de inicialización SQL que se copiarán al contenedor
+      - ./mysql-init-files:/docker-entrypoint-initdb.d/
+      # Volumen para mantener los datos de MySQL persistentes en el host
+      - mysql_data:/var/lib/mysql
+    # Mapea el puerto 3306 del host al puerto 3306 del contenedor
+    ports:
+      - "3306:3306"
+
+# Definición de volúmenes para persistencia de datos
+volumes:
+  # Volumen para almacenar datos de MySQL
+  mysql_data:
+
